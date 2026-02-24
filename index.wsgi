@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# deploy: 0
 import os
 import sys
 import time

@@ -62,16 +62,26 @@ function initMobileMenu() {
     
     if (!burgerBtn || !mobileMenu) return;
     
+    let scrollPosition = 0;
+
     function closeMobileMenu() {
         burgerBtn.classList.remove('active');
         mobileMenu.classList.remove('active');
         document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        window.scrollTo(0, scrollPosition);
     }
-    
+
     function openMobileMenu() {
+        scrollPosition = window.scrollY || window.pageYOffset;
         burgerBtn.classList.add('active');
         mobileMenu.classList.add('active');
         document.body.style.overflow = 'hidden';
+        document.body.style.position = 'fixed';
+        document.body.style.top = `-${scrollPosition}px`;
+        document.body.style.width = '100%';
     }
     
     burgerBtn.addEventListener('click', function() {
