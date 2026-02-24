@@ -1,0 +1,242 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero__bg-grid"></div>
+    <div class="hero__floating hero__floating--1"></div>
+    <div class="hero__floating hero__floating--2"></div>
+    <div class="hero__floating hero__floating--3"></div>
+    
+    <div class="container">
+        <div class="hero__content">
+            <div class="hero__badge">
+                <span class="hero__badge-icon">✓</span>
+                <span>Более {{ settings.years_work }} лет на рынке Томска</span>
+            </div>
+            
+            <h1 class="hero__title">
+                Скупка техники <span>в Томске</span>
+            </h1>
+            
+            <p class="hero__subtitle">
+                Продайте свою технику быстро и выгодно. Честная оценка, моментальная оплата, выезд на дом. Нашли где дороже — дадим цену выше!
+            </p>
+            
+            <div class="hero__actions">
+                <a href="tel:{{ site_settings.phone_link }}" class="btn btn--primary btn--large">
+                    📞 Позвонить сейчас
+                </a>
+                <a href="#contact-form" class="btn btn--outline btn--large">
+                    Оставить заявку
+                </a>
+            </div>
+            
+            <div class="hero__stats">
+                <div class="hero__stat">
+                    <span class="hero__stat-number">{{ settings.devices_bought }}+</span>
+                    <span class="hero__stat-label">Купленных устройств</span>
+                </div>
+                <div class="hero__stat">
+                    <span class="hero__stat-number">{{ settings.happy_clients }}+</span>
+                    <span class="hero__stat-label">Довольных клиентов</span>
+                </div>
+                <div class="hero__stat">
+                    <span class="hero__stat-number">80%</span>
+                    <span class="hero__stat-label">От рыночной цены</span>
+                </div>
+                <div class="hero__stat">
+                    <span class="hero__stat-number">15 мин</span>
+                    <span class="hero__stat-label">Быстрая оценка</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% if service_pages %}
+<section class="services" id="services">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-badge">🛠️ Услуги</span>
+            <h2 class="section-title">Что мы <span>покупаем</span></h2>
+            <p class="section-subtitle">
+                Скупаем технику в любом состоянии — рабочую, сломанную или залитую. Приедем сами и заплатим сразу.
+            </p>
+        </div>
+        
+        <div class="services__grid">
+            {% for service in service_pages %}
+            <a href="{{ service.get_absolute_url }}" class="service-card">
+                <div class="service-card__icon">
+                    {% if 'noutbuk' in service.slug %}💻{% elif 'kompyuter' in service.slug %}🖥️{% elif 'monitor' in service.slug %}🖥️{% elif 'remont' in service.slug %}🔧{% else %}📱{% endif %}
+                </div>
+                <h3 class="service-card__title">{{ service.title }}</h3>
+                <p class="service-card__desc">{{ service.hero_subtitle|default:"Покупаем в любом состоянии по максимальной цене"|truncatewords:15 }}</p>
+                <span class="service-card__link">Узнать больше →</span>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<section class="advantages" id="advantages">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-badge">⭐ Преимущества</span>
+            <h2 class="section-title">Почему выбирают <span>нас</span></h2>
+            <p class="section-subtitle">
+                Работаем честно и прозрачно. Наша репутация — лучшая гарантия справедливой сделки.
+            </p>
+        </div>
+        
+        <div class="advantages__grid">
+            <div class="advantage-card">
+                <div class="advantage-card__icon">💰</div>
+                <h3 class="advantage-card__title">Максимальная цена</h3>
+                <p class="advantage-card__text">Выкупаем до 80% от рыночной стоимости. Нашли дороже — дадим цену выше.</p>
+            </div>
+            <div class="advantage-card">
+                <div class="advantage-card__icon">⚡</div>
+                <h3 class="advantage-card__title">Оценка за 15 минут</h3>
+                <p class="advantage-card__text">Отправьте фото в WhatsApp и получите точную стоимость моментально.</p>
+            </div>
+            <div class="advantage-card">
+                <div class="advantage-card__icon">🚗</div>
+                <h3 class="advantage-card__title">Выезд на дом</h3>
+                <p class="advantage-card__text">Приедем к вам бесплатно в удобное время с деньгами на руках.</p>
+            </div>
+            <div class="advantage-card">
+                <div class="advantage-card__icon">🔄</div>
+                <h3 class="advantage-card__title">Trade-In</h3>
+                <p class="advantage-card__text">Обменяйте старое устройство на новое с выгодной доплатой.</p>
+            </div>
+            <div class="advantage-card">
+                <div class="advantage-card__icon">🔧</div>
+                <h3 class="advantage-card__title">Любое состояние</h3>
+                <p class="advantage-card__text">Принимаем рабочую, сломанную, залитую и разбитую технику.</p>
+            </div>
+            <div class="advantage-card">
+                <div class="advantage-card__icon">💵</div>
+                <h3 class="advantage-card__title">Оплата сразу</h3>
+                <p class="advantage-card__text">Наличными или переводом — как вам удобнее, без задержек.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="about" id="about">
+    <div class="container">
+        <div class="about__content">
+            <div class="about__info">
+                <span class="section-badge">🏢 О компании</span>
+                <h2 class="section-title">Работаем для вас <span>с 2014 года</span></h2>
+                <p class="about__text">
+                    <strong>TOMSK-SKUPKA.RU</strong> — место, где вы можете продать технику быстро, выгодно и безопасно. Мы ценим ваше время и доверие.
+                </p>
+                <p class="about__text">
+                    За {{ settings.years_work }} лет работы мы помогли тысячам клиентов не только избавиться от ненужной техники, но и получить за неё справедливую цену.
+                </p>
+                
+                <div class="about__features">
+                    <div class="about__feature">
+                        <span class="about__feature-icon">✅</span>
+                        <span>Честная оценка</span>
+                    </div>
+                    <div class="about__feature">
+                        <span class="about__feature-icon">✅</span>
+                        <span>Быстрая сделка</span>
+                    </div>
+                    <div class="about__feature">
+                        <span class="about__feature-icon">✅</span>
+                        <span>Выезд бесплатно</span>
+                    </div>
+                    <div class="about__feature">
+                        <span class="about__feature-icon">✅</span>
+                        <span>Оплата сразу</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="about__stats">
+                <div class="stats">
+                    <div class="stats__item">
+                        <span class="stats__number">{{ settings.years_work }}</span>
+                        <span class="stats__label">Лет на рынке</span>
+                    </div>
+                    <div class="stats__item">
+                        <span class="stats__number">{{ settings.devices_bought }}</span>
+                        <span class="stats__label">Купленных устройств</span>
+                    </div>
+                    <div class="stats__item">
+                        <span class="stats__number">{{ settings.happy_clients }}</span>
+                        <span class="stats__label">Довольных клиентов</span>
+                    </div>
+                    <div class="stats__item">
+                        <span class="stats__number">{{ settings.devices_repaired }}</span>
+                        <span class="stats__label">Ремонтов техники</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% if page.content %}
+<section class="content-section">
+    <div class="container">
+        <div class="content-block">
+            {{ page.content|safe }}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{% if page.show_contact_form %}
+{% include 'includes/contact_form.html' %}
+{% endif %}
+
+<section class="location" id="contacts">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-badge">📍 Контакты</span>
+            <h2 class="section-title">Как нас <span>найти</span></h2>
+            <p class="section-subtitle">
+                Приезжайте к нам в офис или вызовите оценщика на дом — как вам удобнее.
+            </p>
+        </div>
+        
+        <div class="location__content">
+            <div class="location__info">
+                <div class="location__item">
+                    <span class="location__icon">📍</span>
+                    <div class="location__item-content">
+                        <strong>Адрес</strong>
+                        <span>{{ site_settings.address }}</span>
+                    </div>
+                </div>
+                <div class="location__item">
+                    <span class="location__icon">🕐</span>
+                    <div class="location__item-content">
+                        <strong>Режим работы</strong>
+                        <span>{{ site_settings.working_hours }}</span>
+                    </div>
+                </div>
+                <div class="location__item">
+                    <span class="location__icon">📞</span>
+                    <div class="location__item-content">
+                        <strong>Телефон</strong>
+                        <a href="tel:{{ site_settings.phone_link }}">{{ site_settings.phone }}</a>
+                    </div>
+                </div>
+            </div>
+            {% if site_settings.map_code %}
+            <div class="location__map">
+                {{ site_settings.map_code|safe }}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

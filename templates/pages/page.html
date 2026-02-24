@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="hero hero--inner">
+    <div class="hero__bg-grid"></div>
+    <div class="hero__floating hero__floating--1"></div>
+    <div class="hero__floating hero__floating--2"></div>
+    
+    <div class="container">
+        <div class="hero__content">
+            <div class="hero__badge">
+                <span class="hero__badge-icon">✓</span>
+                <span>Лучшие цены в Томске</span>
+            </div>
+            
+            <h1 class="hero__title">{{ page.hero_title|default:page.title }}</h1>
+            
+            {% if page.hero_subtitle %}
+            <p class="hero__subtitle">{{ page.hero_subtitle }}</p>
+            {% endif %}
+            
+            <div class="hero__actions">
+                <a href="tel:{{ site_settings.phone_link }}" class="btn btn--primary btn--large">
+                    📞 {{ site_settings.phone }}
+                </a>
+                <a href="#contact-form" class="btn btn--outline btn--large">
+                    Оставить заявку
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% if page.show_contact_form %}
+{% include 'includes/contact_form.html' %}
+{% endif %}
+
+{% with advantages=page.get_advantages %}
+{% if advantages %}
+<section class="advantages">
+    <div class="container">
+        {% if page.advantages_title %}
+        <div class="section-header">
+            <span class="section-badge">⭐ Преимущества</span>
+            <h2 class="section-title">{{ page.advantages_title }}</h2>
+        </div>
+        {% endif %}
+        
+        <div class="advantages__grid">
+            {% for adv in advantages %}
+            <div class="advantage-card">
+                <div class="advantage-card__icon">
+                    {% if forloop.counter == 1 %}💰{% elif forloop.counter == 2 %}🔧{% elif forloop.counter == 3 %}🚗{% elif forloop.counter == 4 %}🔄{% else %}✅{% endif %}
+                </div>
+                <h3 class="advantage-card__title">{{ adv.title }}</h3>
+                {% if adv.text %}
+                <p class="advantage-card__text">{{ adv.text }}</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endwith %}
+
+{% if page.content %}
+<section class="content-section">
+    <div class="container">
+        <div class="content-block">
+            {{ page.content|safe }}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<section class="location" id="contacts">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-badge">📍 Контакты</span>
+            <h2 class="section-title">Как нас <span>найти</span></h2>
+        </div>
+        
+        <div class="location__content">
+            <div class="location__info">
+                <div class="location__item">
+                    <span class="location__icon">📍</span>
+                    <div class="location__item-content">
+                        <strong>Адрес</strong>
+                        <span>{{ site_settings.address }}</span>
+                    </div>
+                </div>
+                <div class="location__item">
+                    <span class="location__icon">🕐</span>
+                    <div class="location__item-content">
+                        <strong>Режим работы</strong>
+                        <span>{{ site_settings.working_hours }}</span>
+                    </div>
+                </div>
+                <div class="location__item">
+                    <span class="location__icon">📞</span>
+                    <div class="location__item-content">
+                        <strong>Телефон</strong>
+                        <a href="tel:{{ site_settings.phone_link }}">{{ site_settings.phone }}</a>
+                    </div>
+                </div>
+            </div>
+            {% if site_settings.map_code %}
+            <div class="location__map">
+                {{ site_settings.map_code|safe }}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

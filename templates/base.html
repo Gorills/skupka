@@ -1,0 +1,155 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ page.get_meta_title }}{% endblock %} | {{ site_settings.site_name }}</title>
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ seo_canonical_url }}">
+    
+    <meta name="description" content="{% if page.meta_description %}{{ page.meta_description }}{% else %}Скупка и ремонт техники в Томске. {{ site_settings.site_name }} — выгодные цены, выезд на дом.{% endif %}">
+    {% if page.meta_keywords %}
+    <meta name="keywords" content="{{ page.meta_keywords }}">
+    {% endif %}
+    
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:url" content="{{ seo_canonical_url }}">
+    <meta property="og:title" content="{% block og_title %}{{ page.get_meta_title }}{% endblock %} | {{ site_settings.site_name }}">
+    <meta property="og:description" content="{% if page.meta_description %}{{ page.meta_description }}{% else %}Скупка и ремонт техники в Томске. {{ site_settings.site_name }}{% endif %}">
+    <meta property="og:site_name" content="{{ site_settings.site_name }}">
+    {% if page.og_image %}
+    <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ page.og_image.url }}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    {% endif %}
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block twitter_title %}{{ page.get_meta_title }}{% endblock %} | {{ site_settings.site_name }}">
+    <meta name="twitter:description" content="{% if page.meta_description %}{{ page.meta_description }}{% else %}Скупка и ремонт техники в Томске. {{ site_settings.site_name }}{% endif %}">
+    {% if page.og_image %}
+    <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{{ page.og_image.url }}">
+    {% endif %}
+    
+    <link rel="icon" href="{% static 'images/favicon.svg' %}" type="image/svg+xml">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block extra_css %}{% endblock %}
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "{{ site_settings.site_name }}",
+        "url": "{{ seo_site_url }}",
+        "telephone": "{{ site_settings.phone }}",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "{{ site_settings.address }}"
+        },
+        "openingHours": "{{ site_settings.working_hours }}"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "{{ site_settings.site_name }}",
+        "image": "{{ seo_site_url }}static/images/favicon.svg",
+        "telephone": "{{ site_settings.phone }}",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "{{ site_settings.address }}"
+        },
+        "openingHours": "{{ site_settings.working_hours }}",
+        "url": "{{ seo_site_url }}",
+        "priceRange": "Руб"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "{% block schema_name %}{{ page.get_meta_title }}{% endblock %} | {{ site_settings.site_name }}",
+        "description": "{% if page.meta_description %}{{ page.meta_description }}{% endif %}",
+        "url": "{{ seo_canonical_url }}",
+        "inLanguage": "ru-RU",
+        "isPartOf": {
+            "@type": "WebSite",
+            "name": "{{ site_settings.site_name }}",
+            "url": "{{ seo_site_url }}"
+        }
+    }
+    </script>
+    {% if seo_breadcrumbs %}
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {% for item in seo_breadcrumbs %}
+            {
+                "@type": "ListItem",
+                "position": {{ forloop.counter }},
+                "name": "{{ item.name }}",
+                "item": "{{ item.url }}"
+            }{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        ]
+    }
+    </script>
+    {% endif %}
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    {% include 'includes/header.html' %}
+    
+    <main>
+        {% if seo_breadcrumbs|length > 1 %}
+        <nav class="breadcrumbs" aria-label="Хлебные крошки">
+            <div class="breadcrumbs__accent"></div>
+            <div class="container">
+                <ol class="breadcrumbs__list">
+                    {% for item in seo_breadcrumbs %}
+                    <li class="breadcrumbs__item">
+                        {% if forloop.last %}
+                        <span class="breadcrumbs__current">{{ item.name }}</span>
+                        {% else %}
+                        <a href="{{ item.url }}" class="breadcrumbs__link">{{ item.name }}</a>
+                        <span class="breadcrumbs__sep" aria-hidden="true">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+                        </span>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ol>
+            </div>
+        </nav>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+    
+    {% include 'includes/footer.html' %}
+    
+    <div class="cookie-banner" id="cookie-banner" aria-hidden="true">
+        <div class="cookie-banner__inner">
+            <p class="cookie-banner__text">
+                Мы используем файлы cookie для работы сайта и улучшения вашего опыта. Продолжая использовать сайт, вы соглашаетесь с нашей
+                <a href="{% url 'core:privacy' %}">политикой конфиденциальности</a>.
+            </p>
+            <button type="button" class="cookie-banner__btn btn btn--primary" id="cookie-banner-accept">
+                Принять
+            </button>
+        </div>
+    </div>
+    
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/cookie-banner.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,8 @@
+/* Кастомные стили для админки */
+.field-advantage_1_title,
+.field-advantage_2_title,
+.field-advantage_3_title,
+.field-advantage_4_title,
+.field-advantage_5_title {
+    margin-top: 10px;
+}
