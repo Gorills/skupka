@@ -57,7 +57,19 @@ class SiteSettings(models.Model):
         default=0.5,
         help_text='От 0.0 до 1.0. Рекомендуется 0.5. Чем выше - тем строже проверка'
     )
-    
+
+    yandex_metrika = models.TextField(
+        'Код счётчика Яндекс.Метрики',
+        blank=True,
+        help_text='Вставьте полный код счётчика из личного кабинета Метрики (скрипт целиком)'
+    )
+    yandex_verification = models.CharField(
+        'Код верификации Яндекс.Вебмастер',
+        max_length=100,
+        blank=True,
+        help_text='Значение content из тега <meta name="yandex-verification" content="..."> (только значение, без кавычек)'
+    )
+
     class Meta:
         verbose_name = 'Настройки сайта'
         verbose_name_plural = 'Настройки сайта'

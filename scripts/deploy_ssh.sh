@@ -69,6 +69,7 @@ ssh "$SSH_SERVER" "cd $REMOTE_PATH && \
   python manage.py migrate --noinput && \
   python manage.py collectstatic --noinput 2>/dev/null || true && \
   sed -i \"s/# deploy: .*/# deploy: \$(date +%s)/\" index.wsgi && \
+  touch index.wsgi && \
   echo '   Миграции применены. Приложение перезапущено.'"
 fi
 

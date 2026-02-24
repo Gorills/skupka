@@ -27,6 +27,10 @@ class SiteSettingsAdmin(admin.ModelAdmin):
             'fields': ('recaptcha_site_key', 'recaptcha_secret_key', 'recaptcha_min_score'),
             'description': 'Защита от спама. Получите ключи на google.com/recaptcha (выберите reCAPTCHA v3)'
         }),
+        ('Яндекс', {
+            'fields': ('yandex_metrika', 'yandex_verification'),
+            'description': 'Яндекс.Метрика: вставьте код счётчика целиком. Вебмастер: укажите только значение content из мета-тега верификации.'
+        }),
         ('Карта', {
             'fields': ('map_code',),
             'description': 'Вставьте код iframe с Яндекс.Карт или Google Maps'

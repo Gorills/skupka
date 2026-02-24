@@ -41,7 +41,9 @@
     
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     {% block extra_css %}{% endblock %}
-    
+    {% if site_settings.yandex_verification %}
+    <meta name="yandex-verification" content="{{ site_settings.yandex_verification }}">
+    {% endif %}
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -152,5 +154,8 @@
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/cookie-banner.js' %}"></script>
     {% block extra_js %}{% endblock %}
+    {% if site_settings.yandex_metrika %}
+    {{ site_settings.yandex_metrika|safe }}
+    {% endif %}
 </body>
 </html>
