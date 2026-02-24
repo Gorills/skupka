@@ -74,14 +74,14 @@ def send_telegram_notification(contact_request):
 📞 <b>Телефон:</b> {contact_request.phone}"""
     
     if contact_request.email:
-        message += f"\n\n📧 <b>Email:</b> {contact_request.email}"
+        message += f"\n📧 <b>Email:</b> {contact_request.email}"
     
     if contact_request.message:
         message += f"\n\n💬 <b>Сообщение:</b>\n{contact_request.message}"
     
     message += page_info
     message += f"\n\n🕐 {contact_request.created_at.strftime('%d.%m.%Y %H:%M')}"
-
+    
     return send_telegram_message(
         settings.telegram_bot_token,
         settings.telegram_chat_id,
@@ -92,7 +92,7 @@ def send_telegram_notification(contact_request):
 def send_telegram_message(bot_token, chat_id, message):
     """Отправляет сообщение в Telegram"""
     url = f'https://api.telegram.org/bot{bot_token}/sendMessage'
-
+    
     data = {
         'chat_id': chat_id,
         'text': message,

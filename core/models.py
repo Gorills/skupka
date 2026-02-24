@@ -57,7 +57,7 @@ class SiteSettings(models.Model):
         default=0.5,
         help_text='От 0.0 до 1.0. Рекомендуется 0.5. Чем выше - тем строже проверка'
     )
-
+    
     class Meta:
         verbose_name = 'Настройки сайта'
         verbose_name_plural = 'Настройки сайта'
